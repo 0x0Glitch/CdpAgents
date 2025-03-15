@@ -1,13 +1,13 @@
-# Freya Protocol
+# Skywire Protocol
 
 <div align="center">
-  <img src="./skywire_not/frontend/src/assets/logo-icon.svg" alt="Freya Logo" width="150"/>
+  <img src="./skywire_not/frontend/src/assets/logo-icon.svg" alt="skywire Logo" width="150"/>
   <h3>AI-Powered Cross-Chain Interoperability Protocol</h3>
 </div>
 
 ## Overview
 
-Freya is a cutting-edge cross-chain interoperability protocol designed to enable seamless token transfers between super chain networks. Built with AI-powered agents, Freya eliminates traditional bridging complexities to deliver fast, secure, and automated cross-chain transactions.
+skywire is a cutting-edge cross-chain interoperability protocol designed to enable seamless token transfers between super chain networks. Built with AI-powered agents, skywire eliminates traditional bridging complexities to deliver fast, secure, and automated cross-chain transactions.
 
 ### Key Features
 
@@ -19,7 +19,7 @@ Freya is a cutting-edge cross-chain interoperability protocol designed to enable
 
 ## Architecture
 
-Freya consists of three main components:
+skywire consists of three main components:
 
 ### 1. Smart Contracts
 
@@ -120,7 +120,7 @@ npm run dev
 
 ## Security
 
-Freya employs several security measures:
+skywire employs several security measures:
 
 - `onlyAgent` modifiers restrict critical functions to authorized agents
 - Transaction verification prevents unauthorized minting/burning
