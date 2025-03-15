@@ -27,7 +27,7 @@ Skywire operates through a sophisticated system of smart contracts and AI agents
 - Deployed on multiple OP stack blockchain networks like Base, Optimism, Unichain, etc.
 - Implement `onlyAgent` modifiers for secure operations
 - Handle token minting and burning across chains
-- Deployed on the address: `0xEBE8Ca83dfFeaa2288a70B4f1e29EcD089d325E2` on base-sepolia, optimism-sepolia, zora and unichain
+- Deployed on the address: `0x13D962B70e8E280c7762557Ef8Bf89Fdc93e3F43` on base-sepolia, optimism-sepolia, zora and unichain
 
 ### Cross-Chain Communication
 
@@ -136,7 +136,7 @@ The SuperERC20 token contracts are deployed on multiple networks with the follow
 - Cross-chain minting and burning via agent verification
 - 1:1 token backing across all supported networks
 
-**Deployment Address**: `0xEBE8Ca83dfFeaa2288a70B4f1e29EcD089d325E2`
+**Deployment Address**: `0x13D962B70e8E280c7762557Ef8Bf89Fdc93e3F43`
 
 ### 2. AI Agent System
 
