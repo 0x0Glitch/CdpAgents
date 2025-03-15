@@ -136,7 +136,7 @@ The SuperERC20 token contracts are deployed on multiple networks with the follow
 - Cross-chain minting and burning via agent verification
 - 1:1 token backing across all supported networks
 
-**Deployment Address**: `0xf5dF4e1CFBB1091Db3dEB278A2fdf73242612e43`
+**Deployment Address**: `0xEBE8Ca83dfFeaa2288a70B4f1e29EcD089d325E2`
 
 ### 2. AI Agent System
 
