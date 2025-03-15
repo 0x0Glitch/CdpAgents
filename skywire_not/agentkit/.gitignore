@@ -133,3 +133,4 @@ api.json
 docs/
 !python/coinbase-agentkit/docs/
 !python/framework-extensions/langchain/docs/
+.env.local
