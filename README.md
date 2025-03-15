@@ -1,9 +1,7 @@
 # Skywire Protocol
 
-<div align="center">
-  <img src="./skywire_not/frontend/src/assets/logo-icon.svg" alt="Skywire Logo" width="150"/>
-  <h3>AI-Powered Cross-Chain Interoperability Protocol</h3>
-</div>
+<img width="480" alt="image" src="https://github.com/user-attachments/assets/de39f7f6-59db-4623-a225-820301b37363" />
+
 
 ## What is Skywire?
 
@@ -17,6 +15,9 @@ Skywire is an innovative cross-chain interoperability protocol that enables seam
 - **Smart Contract Integration**: Implements secure smart contracts with agent-only access for critical operations
 
 ## How does Skywire work?
+
+![Uploading image.png…]()
+
 
 Skywire operates through a sophisticated system of smart contracts and AI agents:
 
