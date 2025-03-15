@@ -16,7 +16,8 @@ Skywire is an innovative cross-chain interoperability protocol that enables seam
 
 ## How does Skywire work?
 
-![Uploading image.png…]()
+<img width="652" alt="image" src="https://github.com/user-attachments/assets/ae49b2a7-89f3-460e-a48f-f002c080f546" />
+
 
 
 Skywire operates through a sophisticated system of smart contracts and AI agents:
