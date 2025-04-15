@@ -1,6 +1,5 @@
 # Skywire Protocol
 
-<img width="480" alt="image" src="https://github.com/user-attachments/assets/de39f7f6-59db-4623-a225-820301b37363" />
 
 
 ## What is Skywire?
@@ -78,6 +77,28 @@ These custom actions are registered in the agent's action registry, allowing it 
 
 The agent interface is powered by a modified version of the CDP-LangChainBot example from AgentKit. The implementation can be found in `skywire_not/agentkit/examples/cdp-langchainbot/chatbot.py`, which we've extended to handle cross-chain transfer requests and provide user-friendly responses about transaction status.
 
+### Dual Agent System
+
+We've developed a dual agent system to enhance cross-chain operations between different blockchain networks. This system consists of two specialized agents:
+
+- **Base Agent (`AiAgen1.py`)**: Specialized for Base blockchain operations (chain ID: 84532)
+- **Optimism Agent (`AiAgent2.py`)**: Specialized for Optimism blockchain operations (chain ID: 10)
+
+Each agent is individually tuned for its respective blockchain network, with dedicated wallet providers and network-specific configurations. The agents are coordinated by a central API service implemented in `dual_agent_api.py` that provides:
+
+- **Automatic Chain Routing**: Intelligently routes instructions to the appropriate agent based on content analysis
+- **Manual Chain Selection**: Allows explicit specification of which chain to use for an instruction
+- **Asynchronous Processing**: Tasks run in the background and can be monitored via API
+- **Process Management**: Automatically starts and manages the agent processes as needed
+
+The dual agent architecture enables more efficient cross-chain operations by:
+1. Maintaining specialized configurations for each chain
+2. Enabling parallel processing of operations on different chains
+3. Providing a unified API interface for cross-chain interactions
+4. Ensuring transaction isolation between different blockchain networks
+
+This system can be accessed through a RESTful API that accepts natural language instructions and automatically determines which agent should handle the request based on the content or explicit chain specification.
+
 ### Starting the Agent
 
 To start the Skywire agent and enable cross-chain functionality, follow these steps:
@@ -90,23 +111,6 @@ cd skywire_not/agentkit
 
 2. Set up the environment variables by creating a `.env` file in the root directory with your API keys and RPC endpoints:
 
-```bash
-# Create .env file
-touch .env
-```
-
-Add the following variables to your `.env` file:
-
-```
-OPENAI_API_KEY=your_openai_api_key
-BASE_SEPOLIA_RPC_URL=your_base_sepolia_rpc_url
-OPTIMISM_SEPOLIA_RPC_URL=your_optimism_sepolia_rpc_url
-ZORA_RPC_URL=your_zora_rpc_url
-UNICHAIN_RPC_URL=your_unichain_rpc_url
-AGENT_PRIVATE_KEY=your_agent_wallet_private_key
-```
-
-3. Install the required dependencies:
 
 ```bash
 pip install -e .
@@ -121,11 +125,25 @@ python -m examples.skywire-crosschain.agent
 
 # OR for the chatbot interface
 python -m examples.cdp-langchainbot.chatbot --skywire-agent
+
+# OR for the dual agent API service
+python -m examples.langchain-cdp-chatbot.dual_agent_api
 ```
 
 5. Once the agent is running, it will automatically monitor for cross-chain transfer requests and execute the necessary transactions. You can interact with it through the CLI or chatbot interface depending on which version you started.
 
 ## Architecture
+
+### Flow Diagram
+
+In this flow:
+1. The user interacts with the Freya Frontend
+2. They can either perform a simple swap or bridge tokens cross-chain
+3. For cross-chain bridging, the process involves:
+   - First swapping to SuperETH (sETH) on the source chain
+   - The AI Agent handling the cross-chain transfer process
+   - Burning sETH on the source chain
+   - Minting sETH on the destination chain
 
 Skywire consists of three main components:
 
@@ -225,6 +243,23 @@ cd skywire_not/agentkit/examples/skywire-crosschain
 # Edit the custom action files
 ```
 
+### Dual Agent API Development
+
+To work on the dual agent API system:
+
+```bash
+cd skywire_not/contract-calling/agentkit/python/examples/langchain-cdp-chatbot
+# Install dependencies
+pip install -r requirements-api.txt
+# Start the API server
+python dual_agent_api.py
+```
+
+The API server will start on http://localhost:8000 and provide endpoints for:
+- Submitting instructions to either blockchain agent
+- Monitoring task status
+- Retrieving task results
+
 ### Frontend Development
 
 The frontend is a React application using Vite, Tailwind CSS, and ethers.js:
@@ -279,4 +314,59 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Built with Coinbase AgentKit
 - Leverages the power of multi-chain Ethereum development
 - Inspired by the vision of a seamless, borderless blockchain ecosystem
+
+## Custom Implementation
+
+### Dual Agent System Implementation
+
+I have designed and implemented a sophisticated dual agent system to enable cross-chain operations between different blockchain networks. This system is one of the key innovations of the Skywire Protocol:
+
+1. **Specialized Chain Agents**: Located at `agentkit/python/examples/langchain-cdp-chatbot/`
+   - **Base Agent (`AiAgen1.py`)**: Specialized agent configured for Base blockchain operations (chain ID: 84532)
+   - **Optimism Agent (`AiAgent2.py`)**: Specialized agent configured for Optimism blockchain operations (chain ID: 10)
+   - Each agent has chain-specific configurations and wallet connections
+
+2. **Central API Service**: Located at `agentkit/python/examples/langchain-cdp-chatbot/dual_agent_api.py`
+   - Implements a RESTful API for interacting with both agents
+   - Provides task management, monitoring, and process orchestration
+   - Implements intelligent instruction routing based on content analysis
+   - Enables asynchronous processing of cross-chain operations
+
+3. **Cross-Chain Orchestration**: 
+   - Coordinate burning tokens on source chain and minting on destination chain
+   - Ensure transaction verification and confirmation across networks
+   - Maintain consistent state between different blockchain networks
+
+The dual agent architecture provides several key advantages:
+- **Enhanced Reliability**: Chain-specific configurations prevent cross-chain errors
+- **Parallel Processing**: Operations on different chains can run simultaneously
+- **Specialized Functionality**: Each agent can be optimized for its target chain
+- **Unified Interface**: A single API endpoint handles all cross-chain operations
+
+My implementation also includes the frontend integration with this dual agent system:
+
+### Frontend Integration with Dual Agents
+
+The frontend React application communicates with the dual agent system through:
+
+1. **Web3Service API Client**: Located at `frontend/src/services/web3Service.js`
+   - Implements a JavaScript client that communicates with the dual agent API
+   - Manages cross-chain transfer requests and status monitoring
+   - Includes functions for wallet connection, network switching, and token operations
+
+2. **BridgeForm Component**: Located at `frontend/src/components/Bridge/BridgeForm.jsx`
+   - Provides the user interface for initiating cross-chain transfers
+   - Implements task status polling to monitor transfer progress
+   - Handles error states and success feedback
+
+### Key Features of My Implementation
+
+- **Intelligent Chain Routing**: Automatically determines which agent should handle each instruction
+- **Manual Chain Selection**: Allows explicit specification of the chain ID for an instruction
+- **Asynchronous Processing**: Tasks run in the background with status tracking
+- **Real-time Status Updates**: The frontend polls the agent API for status updates every 5 seconds
+- **Error Handling**: Robust error handling for network issues, transaction failures, and timeout conditions
+- **Chain Auto-switching**: Automatic wallet network switching based on the selected source and target chains
+
+This dual agent architecture bridges the gap between different blockchain networks, creating a seamless cross-chain transfer experience powered by AI.
 
