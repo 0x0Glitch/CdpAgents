@@ -1,124 +1,177 @@
-# Skywire Protocol
+## Skywire Protocol Overview
+Skywire Protocol is an advanced cross-chain interoperability solution engineered to facilitate seamless token transfers between distinct super chain blockchain networks, including Base, Optimism, Unichain, among others. The protocol implements a secure and efficient architecture for token swapping and bridging across multiple blockchain ecosystems, employing artificial intelligence agents to ensure accessibility and user-friendliness.
 
+## Core Functionality
+The Skywire Protocol provides the following primary capabilities:
 
+* **Cross-Chain Token Swaps**: Enables the exchange of tokens between different super chain blockchain networks
+* **Token Bridging**: Facilitates secure token transfers across blockchain ecosystems
+* **Automated Transaction Processing**: Utilizes AI agents for automatic cross-chain transaction management
+* **Secure Smart Contract Implementation**: Deploys contracts with agent-only access for critical operations
 
-## What is Skywire?
+## Technical Architecture
+### System Components
+Skywire's architecture consists of three principal components:
 
-Skywire is an innovative cross-chain interoperability protocol that enables seamless token transfers between different super chain blockchain networks like Base, Optimism, Unichain, etc. It provides a secure and efficient way to swap and bridge tokens across multiple blockchain ecosystems, making cross-chain transactions accessible and user-friendly by utilizing AI agents.
+#### 1. Smart Contract Infrastructure
+The protocol deploys SuperERC20 token contracts across multiple networks with the following capabilities:
 
-## What does Skywire do?
+* Native chain token deposit/withdrawal functionality
+* Cross-chain minting and burning operations with agent verification
+* Maintenance of 1:1 token backing across all supported networks
 
-- **Cross-Chain Token Swaps**: Enables users to swap tokens between different super chain blockchain networks like Base, Optimism, Unichain, etc.
-- **Token Bridging**: Facilitates the secure transfer of tokens from one super chain blockchain network to another
-- **Automated Processing**: Uses AI agents to handle cross-chain transactions automatically
-- **Smart Contract Integration**: Implements secure smart contracts with agent-only access for critical operations
+**Deployment Address**: `0x13D962B70e8E280c7762557Ef8Bf89Fdc93e3F43`
 
-## How does Skywire work?
+#### 2. AI Agent System
+Built upon Coinbase's AgentKit framework, the agent system manages:
 
-<img width="652" alt="image" src="https://github.com/user-attachments/assets/ae49b2a7-89f3-460e-a48f-f002c080f546" />
+* Cross-chain transaction orchestration with security verification
+* Transaction confirmation and validation
+* Network monitoring and exception handling
 
+The system implements specialized custom actions for:
 
+* Token burning on source chain
+* Token minting on destination chain
+* End-to-end cross-chain transfer orchestration
 
-Skywire operates through a sophisticated system of smart contracts and AI agents:
+#### 3. User Interface
+A React-based frontend interface providing:
 
-### Smart Contracts
+* Network selection functionality for source and destination chains
+* Multi-network token balance visualization
+* Streamlined bridging process
+* Transaction status monitoring
+* Web3 wallet integration
 
-- Deployed on multiple OP stack blockchain networks like Base, Optimism, Unichain, etc.
-- Implement `onlyAgent` modifiers for secure operations
-- Handle token minting and burning across chains
-- Deployed on the address: `0x13D962B70e8E280c7762557Ef8Bf89Fdc93e3F43` on base-sepolia, optimism-sepolia, zora and unichain
+### Operational Workflow
+The protocol operates through a sophisticated system of smart contracts and AI agents:
 
-### Cross-Chain Communication
+#### Smart Contract Implementation
+* Contracts are deployed across multiple OP stack blockchain networks
+* Implementation of `onlyAgent` modifiers ensures operational security
+* Contracts handle token minting and burning operations across chains
 
-- Secure message passing between chains
-- Verification of cross-chain transactions
-- Atomic swaps for guaranteed transaction completion
+#### Cross-Chain Communication Protocol
+* Secure inter-chain message transmission
+* Cross-chain transaction verification
+* Atomic swap implementation for transaction integrity
 
-### Token Management
+#### Token Management System
+* Cross-chain minting of equivalent tokens
+* Secure token burning on the source chain
+* Cross-chain token supply consistency maintenance
 
-- Cross-chain minting of equivalent tokens
-- Secure burning of tokens on the source chain
-- Maintaining token supply consistency across chains
+### SuperERC20 Token Contract Functionality
+The SuperETH contract functions as an ERC-20 token enabling users to wrap and unwrap ETH into SuperETH (sETH) at a 1:1 ratio. Users may deposit ETH to receive an equivalent sETH amount, which can be utilized for on-chain transactions or cross-chain transfers. Users retain the ability to redeem sETH for ETH at any time.
 
-## Working of the SuperERC20 Token Contracts
+The contract's cross-chain functionality is facilitated by an AI agent (a wallet with identical addresses across multiple chains). This agent possesses exclusive authorization to execute `crosschainMint` and `crosschainBurn` functions, ensuring that SuperETH is minted on the destination chain only after an equivalent amount has been burned on the source chain. This approach eliminates third-party bridge dependence, thereby reducing costs, enhancing security, and enabling trustless, decentralized multi-chain ETH transfers.
 
-The SuperETH contract is an ERC-20 token that allows users to seamlessly wrap and unwrap ETH into SuperETH (sETH) at a 1:1 ratio. Users can deposit ETH into the contract to receive an equivalent amount of sETH, which can be used for on-chain transactions or transferred across supported chains. At any time, users can redeem or withdraw sETH to reclaim their ETH.
-
-A key feature of this contract is cross-chain functionality, facilitated by an AI agent (a wallet with the same address on multiple chains). This agent is the only entity authorized to call `crosschainMint` and `crosschainBurn`, ensuring that SuperETH is only minted on the destination chain after an equivalent amount has been burned on the source chain. This approach eliminates reliance on third-party bridges, reducing costs, improving security, and enabling trustless, decentralized multi-chain ETH transfers.
-
-## AI Agents Implementation
-
-Skywire utilizes AI agents as trusted intermediaries for cross-chain operations:
+## AI Agent Implementation
 
 ### Agent Responsibilities
-
-- Execute cross-chain mint functions
-- Handle token burning operations
-- Verify transaction validity
-- Monitor network status
+* Execution of cross-chain minting functions
+* Management of token burning operations
+* Transaction validity verification
+* Network status monitoring
 
 ### Security Features
-
-- `onlyAgent` modifier ensures only authorized agents can execute critical functions
-- AI-powered validation of transactions
-- Automated security checks and balances
+* `onlyAgent` modifier implementation ensures authorized execution of critical functions
+* AI-powered transaction validation
+* Automated security verification systems
 
 ### Custom AgentKit Actions
+The protocol extends Coinbase's AgentKit framework with custom actions specifically designed for cross-chain operations. These custom actions are registered in the agent's action registry, enabling natural language instruction processing for complex cross-chain operations, including:
 
-We've extended Coinbase's AgentKit framework with custom actions specifically for cross-chain operations. These actions are located in the `skywire_not/agentkit/examples/skywire-crosschain/` directory:
-
-- `crosschain_burn.py`: Implements the action for burning tokens on the source chain
-- `crosschain_mint.py`: Handles minting tokens on the destination chain
-- `crosschain_transfer.py`: Orchestrates the entire cross-chain transfer process
-
-These custom actions are registered in the agent's action registry, allowing it to understand and execute complex cross-chain operations based on natural language instructions.
+* Source chain token burning
+* Destination chain token minting
+* Complete cross-chain transfer orchestration
 
 ### Chatbot Integration
+The agent interface utilizes a modified version of the CDP-LangChainBot example from AgentKit. The implementation has been extended to process cross-chain transfer requests and provide user-friendly transaction status updates.
 
-The agent interface is powered by a modified version of the CDP-LangChainBot example from AgentKit. The implementation can be found in `skywire_not/agentkit/examples/cdp-langchainbot/chatbot.py`, which we've extended to handle cross-chain transfer requests and provide user-friendly responses about transaction status.
+## Dual Agent System
+The protocol implements a dual agent system to enhance cross-chain operations between different blockchain networks, comprising two specialized agents:
 
-### Dual Agent System
+* **Base Agent (AiAgen1.py)**: Optimized for Base blockchain operations (chain ID: 84532)
+* **Optimism Agent (AiAgent2.py)**: Optimized for Optimism blockchain operations (chain ID: 10)
 
-We've developed a dual agent system to enhance cross-chain operations between different blockchain networks. This system consists of two specialized agents:
+Each agent is specifically configured for its respective blockchain network, with dedicated wallet providers and network-specific parameters. The agents are coordinated through a central API service providing:
 
-- **Base Agent (`AiAgen1.py`)**: Specialized for Base blockchain operations (chain ID: 84532)
-- **Optimism Agent (`AiAgent2.py`)**: Specialized for Optimism blockchain operations (chain ID: 10)
+* **Automatic Chain Routing**: Intelligent instruction routing based on content analysis
+* **Manual Chain Selection**: Optional explicit chain specification
+* **Asynchronous Processing**: Background task execution with monitoring capabilities
+* **Process Management**: Automated agent process initialization and management
 
-Each agent is individually tuned for its respective blockchain network, with dedicated wallet providers and network-specific configurations. The agents are coordinated by a central API service implemented in `dual_agent_api.py` that provides:
+The dual agent architecture enables efficient cross-chain operations through:
 
-- **Automatic Chain Routing**: Intelligently routes instructions to the appropriate agent based on content analysis
-- **Manual Chain Selection**: Allows explicit specification of which chain to use for an instruction
-- **Asynchronous Processing**: Tasks run in the background and can be monitored via API
-- **Process Management**: Automatically starts and manages the agent processes as needed
+* Chain-specific configuration maintenance
+* Parallel operation processing across different chains
+* Unified API interface provision for cross-chain interactions
+* Transaction isolation between blockchain networks
 
-The dual agent architecture enables more efficient cross-chain operations by:
-1. Maintaining specialized configurations for each chain
-2. Enabling parallel processing of operations on different chains
-3. Providing a unified API interface for cross-chain interactions
-4. Ensuring transaction isolation between different blockchain networks
+This system is accessible via a RESTful API that processes natural language instructions and determines appropriate agent routing based on content analysis or explicit chain specification.
 
-This system can be accessed through a RESTful API that accepts natural language instructions and automatically determines which agent should handle the request based on the content or explicit chain specification.
+## Supported Networks
+* Base Sepolia (`0x14913`)
+* Optimism Sepolia (`0xA8F3C`)
+* Zora (`0x7777777`)
+* Unichain (`0x82`)
 
-### Starting the Agent
+## Implementation Guidelines
 
-To start the Skywire agent and enable cross-chain functionality, follow these steps:
+### Prerequisites
+* Node.js 18+ and npm
+* MetaMask or compatible Web3 wallet
+* Test ETH on supported networks
+* Python 3.9+ for agent execution
+* OpenAI API key for agent functionality
 
-1. Navigate to the AgentKit directory:
-
+### Installation Procedure
+1. Acquire the project:
 ```bash
-cd skywire_not/agentkit
+# Download and extract the project
+cd skywire
 ```
 
-2. Set up the environment variables by creating a `.env` file in the root directory with your API keys and RPC endpoints:
+2. Install frontend dependencies:
+```bash
+cd frontend
+npm install
+```
 
+3. Initialize the development server:
+```bash
+npm run dev
+```
 
+4. Access the application interface at `http://localhost:5173`
+
+### Agent Initialization
+To initialize the Skywire agent and enable cross-chain functionality:
+
+1. Navigate to the AgentKit directory:
+```bash
+cd agentkit
+```
+
+2. Configure environment variables by creating a `.env` file with API keys and RPC endpoints:
+```
+OPENAI_API_KEY=your_openai_api_key
+BASE_SEPOLIA_RPC_URL=your_base_sepolia_rpc_url
+OPTIMISM_SEPOLIA_RPC_URL=your_optimism_sepolia_rpc_url
+ZORA_RPC_URL=your_zora_rpc_url
+UNICHAIN_RPC_URL=your_unichain_rpc_url
+AGENT_PRIVATE_KEY=your_agent_wallet_private_key
+```
+
+3. Install dependencies:
 ```bash
 pip install -e .
 pip install -r examples/requirements.txt
 ```
 
-4. Start the Skywire agent:
-
+4. Initialize the Skywire agent:
 ```bash
 # For the cross-chain agent with CLI interface
 python -m examples.skywire-crosschain.agent
@@ -130,243 +183,148 @@ python -m examples.cdp-langchainbot.chatbot --skywire-agent
 python -m examples.langchain-cdp-chatbot.dual_agent_api
 ```
 
-5. Once the agent is running, it will automatically monitor for cross-chain transfer requests and execute the necessary transactions. You can interact with it through the CLI or chatbot interface depending on which version you started.
+Upon initialization, the agent will monitor cross-chain transfer requests and execute necessary transactions. Interaction is possible through the CLI or chatbot interface depending on the initialized version.
 
-## Architecture
-
-### Flow Diagram
-
-In this flow:
-1. The user interacts with the Freya Frontend
-2. They can either perform a simple swap or bridge tokens cross-chain
-3. For cross-chain bridging, the process involves:
-   - First swapping to SuperETH (sETH) on the source chain
-   - The AI Agent handling the cross-chain transfer process
-   - Burning sETH on the source chain
-   - Minting sETH on the destination chain
-
-Skywire consists of three main components:
-
-### 1. Smart Contracts
-
-The SuperERC20 token contracts are deployed on multiple networks with the following capabilities:
-- Deposit/withdraw native chain tokens
-- Cross-chain minting and burning via agent verification
-- 1:1 token backing across all supported networks
-
-**Deployment Address**: `0x13D962B70e8E280c7762557Ef8Bf89Fdc93e3F43`
-
-### 2. AI Agent System
-
-Built on Coinbase's AgentKit framework, the agent system handles:
-- Secure cross-chain transaction orchestration
-- Transaction verification and confirmation
-- Chain monitoring and error handling
-
-The agent implements custom actions:
-- `crosschain_burn`: Burns tokens on source chain
-- `crosschain_mint`: Mints tokens on destination chain
-- `crosschain_transfer`: Orchestrates complete cross-chain transfers
-
-### 3. Frontend Interface
-
-A React-based user interface that provides:
-- Network selection for source and destination chains
-- Token balance display across networks
-- Intuitive bridging process
-- Transaction status monitoring
-- Integration with web3 wallets
-
-## Supported Networks
-
-- Base Sepolia (`0x14913`)
-- Optimism Sepolia (`0xA8F3C`)
-- Zora (`0x7777777`)
-- Unichain (`0x82`)
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ and npm
-- MetaMask or compatible Web3 wallet
-- Test ETH on supported networks
-- Python 3.9+ for running the agent
-- OpenAI API key for agent functionality
-
-### Installation
-
-1. Download the project
-```bash
-# Download and extract the project
-cd skywire
-```
-
-2. Install frontend dependencies
-```bash
-cd skywire_not/frontend
-npm install
-```
-
-3. Start the development server
-```bash
-npm run dev
-```
-
-4. Access the application at `http://localhost:5173`
-
-### Using the Bridge
-
-1. Connect your wallet by clicking the "Connect Wallet" button
+### Bridge Utilization
+1. Connect a wallet via the "Connect Wallet" button
 2. Select source and destination networks
-3. Enter the amount of ETH to bridge
-4. Provide the recipient address (defaults to your connected wallet)
-5. Click "Bridge Your ETH"
-6. Confirm the transaction in your wallet
-7. The AI agent will automatically handle the cross-chain process
+3. Specify the ETH amount for bridging
+4. Provide recipient address (defaults to connected wallet)
+5. Initiate the process by selecting "Bridge Your ETH"
+6. Confirm the transaction through the wallet interface
+7. The AI agent will automatically manage the cross-chain process
 
 ## Development
 
 ### Agent Development
-
-The agent system is built on Coinbase's AgentKit framework. To work on the agent:
+The agent system utilizes Coinbase's AgentKit framework. For agent development:
 
 ```bash
-cd skywire_not/agentkit
-# Follow the setup instructions in the AgentKit README
+cd agentkit
+# Follow AgentKit README setup instructions
 ```
 
-To modify or extend the custom actions:
+For custom action modification:
 
 ```bash
-cd skywire_not/agentkit/examples/skywire-crosschain
-# Edit the custom action files
+cd agentkit/examples/skywire-crosschain
+# Modify the custom action files as required
 ```
 
 ### Dual Agent API Development
-
-To work on the dual agent API system:
+For dual agent API system development:
 
 ```bash
-cd skywire_not/contract-calling/agentkit/python/examples/langchain-cdp-chatbot
+cd agentkit/python/examples/langchain-cdp-chatbot
 # Install dependencies
 pip install -r requirements-api.txt
-# Start the API server
+# Initialize the API server
 python dual_agent_api.py
 ```
 
-The API server will start on http://localhost:8000 and provide endpoints for:
-- Submitting instructions to either blockchain agent
-- Monitoring task status
-- Retrieving task results
+The API server will initialize on `http://localhost:8000` with endpoints for:
+* Blockchain agent instruction submission
+* Task status monitoring
+* Result retrieval
 
 ### Frontend Development
-
-The frontend is a React application using Vite, Tailwind CSS, and ethers.js:
+The frontend utilizes React with Vite, Tailwind CSS, and ethers.js:
 
 ```bash
-cd skywire_not/frontend
+cd frontend
 npm install
 npm run dev
 ```
 
-## Future Goals
+## Strategic Roadmap
 
 ### Protocol Enhancement
+* Extended blockchain network support
+* Cross-chain transaction speed optimization
+* Enhanced security implementation
 
-- Support for additional blockchain networks
-- Optimization of cross-chain transaction speeds
-- Enhanced security measures
+### AI Agent Advancement
+* Advanced transaction validation algorithm development
+* Improved exception handling and recovery systems
+* Enhanced monitoring capability implementation
 
-### AI Agent Improvements
+### User Experience Refinement
+* Interface simplification
+* Enhanced transaction tracking
+* Improved analytics and reporting systems
 
-- Advanced transaction validation algorithms
-- Improved error handling and recovery
-- Enhanced monitoring capabilities
+### Ecosystem Expansion
+* DeFi protocol integration expansion
+* Major blockchain network partnership development
+* Community-driven development initiative implementation
 
-### User Experience
+## Security Measures
+Skywire implements comprehensive security measures:
 
-- Simplified transaction interface
-- Better transaction tracking
-- Enhanced analytics and reporting
-
-### Ecosystem Growth
-
-- Integration with more DeFi protocols
-- Partnership with major blockchain networks
-- Community-driven development initiatives
-
-## Security
-
-Skywire employs several security measures:
-
-- `onlyAgent` modifiers restrict critical functions to authorized agents
-- Transaction verification prevents unauthorized minting/burning
-- Confirmation monitoring ensures transaction finality
-- 1:1 token backing maintains asset integrity
+* `onlyAgent` modifiers restrict critical function access to authorized agents
+* Transaction verification prevents unauthorized minting/burning operations
+* Confirmation monitoring ensures transaction finality
+* 1:1 token backing maintains asset integrity
 
 ## License
-
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
+* Developed with Coinbase AgentKit
+* Leverages multi-chain Ethereum development capabilities
+* Inspired by the vision of seamless blockchain ecosystem interoperability
 
-- Built with Coinbase AgentKit
-- Leverages the power of multi-chain Ethereum development
-- Inspired by the vision of a seamless, borderless blockchain ecosystem
-
-## Custom Implementation
+## Custom Implementation Details
 
 ### Dual Agent System Implementation
+The Skywire Protocol implements an advanced dual agent system enabling cross-chain operations between different blockchain networks:
 
-I have designed and implemented a sophisticated dual agent system to enable cross-chain operations between different blockchain networks. This system is one of the key innovations of the Skywire Protocol:
+#### Specialized Chain Agents
+Located at `agentkit/python/examples/langchain-cdp-chatbot/`:
+* **Base Agent (AiAgen1.py)**: Specialized for Base blockchain operations (chain ID: 84532)
+* **Optimism Agent (AiAgent2.py)**: Specialized for Optimism blockchain operations (chain ID: 10)
+* Each agent implements chain-specific configurations and wallet connections
 
-1. **Specialized Chain Agents**: Located at `agentkit/python/examples/langchain-cdp-chatbot/`
-   - **Base Agent (`AiAgen1.py`)**: Specialized agent configured for Base blockchain operations (chain ID: 84532)
-   - **Optimism Agent (`AiAgent2.py`)**: Specialized agent configured for Optimism blockchain operations (chain ID: 10)
-   - Each agent has chain-specific configurations and wallet connections
+#### Central API Service
+Located at `agentkit/python/examples/langchain-cdp-chatbot/dual_agent_api.py`:
+* Implements RESTful API for agent interaction
+* Provides comprehensive task management, monitoring, and orchestration
+* Intelligent instruction routing based on content analysis
+* Asynchronous cross-chain operation processing
 
-2. **Central API Service**: Located at `agentkit/python/examples/langchain-cdp-chatbot/dual_agent_api.py`
-   - Implements a RESTful API for interacting with both agents
-   - Provides task management, monitoring, and process orchestration
-   - Implements intelligent instruction routing based on content analysis
-   - Enables asynchronous processing of cross-chain operations
+#### Cross-Chain Orchestration
+* Coordinated token burning on source chain and minting on destination chain
+* Cross-network transaction verification and confirmation
+* Cross-chain state consistency maintenance
 
-3. **Cross-Chain Orchestration**: 
-   - Coordinate burning tokens on source chain and minting on destination chain
-   - Ensure transaction verification and confirmation across networks
-   - Maintain consistent state between different blockchain networks
-
-The dual agent architecture provides several key advantages:
-- **Enhanced Reliability**: Chain-specific configurations prevent cross-chain errors
-- **Parallel Processing**: Operations on different chains can run simultaneously
-- **Specialized Functionality**: Each agent can be optimized for its target chain
-- **Unified Interface**: A single API endpoint handles all cross-chain operations
-
-My implementation also includes the frontend integration with this dual agent system:
+The dual agent architecture provides several advantages:
+* **Enhanced Reliability**: Chain-specific configurations mitigate cross-chain errors
+* **Parallel Processing**: Simultaneous operation execution across different chains
+* **Specialized Functionality**: Chain-optimized agent configuration
+* **Unified Interface**: Single API endpoint for all cross-chain operations
 
 ### Frontend Integration with Dual Agents
+The frontend React application interfaces with the dual agent system through:
 
-The frontend React application communicates with the dual agent system through:
+#### Web3Service API Client
+Located at `frontend/src/services/web3Service.js`:
+* JavaScript client implementation for dual agent API communication
+* Cross-chain transfer request and status monitoring management
+* Wallet connection, network switching, and token operation functionality
 
-1. **Web3Service API Client**: Located at `frontend/src/services/web3Service.js`
-   - Implements a JavaScript client that communicates with the dual agent API
-   - Manages cross-chain transfer requests and status monitoring
-   - Includes functions for wallet connection, network switching, and token operations
+#### BridgeForm Component
+Located at `frontend/src/components/Bridge/BridgeForm.jsx`:
+* User interface for cross-chain transfer initiation
+* Transfer progress monitoring through task status polling
+* Error state and success feedback handling
 
-2. **BridgeForm Component**: Located at `frontend/src/components/Bridge/BridgeForm.jsx`
-   - Provides the user interface for initiating cross-chain transfers
-   - Implements task status polling to monitor transfer progress
-   - Handles error states and success feedback
+### Key Implementation Features
+* **Intelligent Chain Routing**: Automatic agent determination for instruction handling
+* **Manual Chain Selection**: Optional explicit chain ID specification
+* **Asynchronous Processing**: Background task execution with status tracking
+* **Real-time Status Updates**: 5-second interval agent API status polling
+* **Comprehensive Error Handling**: Network issue, transaction failure, and timeout condition management
+* **Chain Auto-switching**: Automatic wallet network switching based on selected chains
 
-### Key Features of My Implementation
-
-- **Intelligent Chain Routing**: Automatically determines which agent should handle each instruction
-- **Manual Chain Selection**: Allows explicit specification of the chain ID for an instruction
-- **Asynchronous Processing**: Tasks run in the background with status tracking
-- **Real-time Status Updates**: The frontend polls the agent API for status updates every 5 seconds
-- **Error Handling**: Robust error handling for network issues, transaction failures, and timeout conditions
-- **Chain Auto-switching**: Automatic wallet network switching based on the selected source and target chains
-
-This dual agent architecture bridges the gap between different blockchain networks, creating a seamless cross-chain transfer experience powered by AI.
+This dual agent architecture effectively bridges disparate blockchain networks, creating a seamless AI-powered cross-chain transfer experience.
 
